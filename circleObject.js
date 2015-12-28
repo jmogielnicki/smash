@@ -30,6 +30,6 @@ CircleObject.prototype.displayInertState = function() {
   text(this.icon, this.location.x, this.location.y);
   this.inertTimer--;
   if (this.status === 'inert' && this.inertTimer < 0) {
-    this.status = 'expired'
+    this.turnOff();
   }
 }

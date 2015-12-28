@@ -18,6 +18,7 @@ var gameB2 = 122
 var players = [];
 var isOpera, isFirefox, isSafari, isChrome, isIE
 var browser;
+var gameFrameRate = 50;
  
 function preload() {
   loadStuff();
@@ -127,11 +128,14 @@ function loadStuff() {
   fightMusic = loadSound('assets/sounds/fightMusic.mp3');
   ballHitSound = loadSound('assets/sounds/ballHit.mp3');
   itemSound = loadSound('assets/sounds/wallHit.mp3');
-  deathSound = loadSound('assets/sounds/death.mp3');
+  deathSound = loadSound('assets/sounds/death2.mp3');
   laughSound = loadSound('assets/sounds/laugh.mp3');
   warpSound = loadSound('assets/sounds/warpOrgan.mp3');
+  droneSound = loadSound('assets/sounds/drone.mp3');
   winSound = loadSound('assets/sounds/cheerShort.mp3');
   winJingle = loadSound('assets/sounds/winJingle.mp3');
+  extraLifeSound = loadSound('assets/sounds/extraLife.mp3');
+  extraLifeSound2 = loadSound('assets/sounds/extraLife2.mp3');
   growSound = loadSound('assets/sounds/grow2.mp3');
   shrinkSound = loadSound('assets/sounds/shrink.mp3');
   fireSound = loadSound('assets/sounds/fireShield.mp3');

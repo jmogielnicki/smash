@@ -6,6 +6,8 @@ function Game() {
   var gravityShields = [];
   var fireShields = [];
   var fireSprites = [];
+  var extraLives = [];
+  var drones = [];
   var obstacles = [];
   var itemLists = [];
   var numObstacles = random(1, 8)
@@ -22,10 +24,10 @@ function Game() {
   var itemTimer = 200;
   var itemTimerDecrease = 0;
   // sc = sizeChanger, fs = fireShield, gs = gravityShield, s = fireSprite
-  var itemPickList = ['sc', 'sc', 'fs', 'fs', 'gs', 'gs', 's', 's']
+  var itemPickList = ['sc', 'sc', 'fs', 'fs', 'gs', 'gs', 's', 's', 'd', 'd', 'e']
 
   this.setupGame = function(player1, player2) {
-    frameRate(60);
+    frameRate(gameFrameRate);
     winJingle.stop();
     heroes = [];
     introMusic.stop();
@@ -53,6 +55,8 @@ function Game() {
     itemLists.push(fireShields);
     itemLists.push(fireSprites);
     itemLists.push(obstacles);
+    itemLists.push(drones);
+    itemLists.push(extraLives);
 
     for (i = 0; i < int(numObstacles); i++) {
       obstacles[i] = new CircleObstacle(random(gameLEdge + margin, gameREdge - margin), random(gameTEdge + 50, gameBEdge - 50));
@@ -66,9 +70,11 @@ function Game() {
       gravityShields[i] = new GravityShield();
       fireSprites[i] = new FireSprite();
       fireShields[i] = new FireShield();
+      drones[i] = new Drone();
+      extraLives[i] = new ExtraLife();
     }
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 0; i++) {
       random(0, 1) < 0.9 ? type = 2 : type = .5;
       sizeChangers[i] = new SizeChanger(type);
     }
@@ -86,79 +92,9 @@ function Game() {
 
     if (heroes[0].transp > 0 && heroes[1].transp > 0) {
       heroes[0].repulseBall(heroes[1])
+      heroes[1].repulseBall(heroes[0])
     }
-
-    for (var i = attractors.length - 1; i >= 0; i--) {
-      attractor = attractors[i]
-      attractor.update();
-      attractor.display();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-        if (heroes[j].state != 'died' && attractor.location.dist(heroes[j].location) < attractor.size) {
-          attractionForce = attractor.attract(heroes[j])
-          heroes[j].applyForce(attractionForce)
-            // accelerationForVolume = abs(heroes[j].acceleration.x) + abs(heroes[j].acceleration.y)
-        }
-      }
-    }
-
-
-    for (var i = obstacles.length - 1; i >= 0; i--) {
-      obstacle = obstacles[i]
-      obstacle.display();
-      obstacle.update();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-
-        if (obstacle.isIntersecting(heroes[j])) {
-          repulseForce = obstacle.repulse(heroes[j]);
-          heroes[j].applyForce(repulseForce)
-        }
-      }
-    }
-
-    for (var i = heroes.length - 1; i >= 0; i--) {
-      heroes[i].applyForce(this.calculateDrag(heroes[i]))
-    }
-
-    for (var i = sizeChangers.length - 1; i >= 0; i--) {
-      sizeChangers[i].display();
-      sizeChangers[i].update();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-        sizeChangers[i].intersectAction(heroes[j])
-      }
-    }
-
-    for (var i = gravityShields.length - 1; i >= 0; i--) {
-      gShield = gravityShields[i]
-      gShield.update();
-      gShield.display();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-        hero = heroes[j];
-        opponent = heroes[abs(j - 1)]
-        gShield.intersectAction(hero, opponent);
-      }
-    }
-
-    for (var i = fireShields.length - 1; i >= 0; i--) {
-      fShield = fireShields[i]
-      fShield.update();
-      fShield.display();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-        hero = heroes[j];
-        opponent = heroes[abs(j - 1)]
-        fShield.intersectAction(hero, opponent);
-      }
-    }
-    
-    for (var i = fireSprites.length - 1; i >= 0; i--) {
-      fSprite = fireSprites[i]
-      fSprite.update();
-      fSprite.display();
-      for (var j = heroes.length - 1; j >= 0; j--) {
-        hero = heroes[j];
-        opponent = heroes[abs(j - 1)]
-        fSprite.intersectAction(hero, opponent);
-      }
-    }
+    this.drawItems();
 
     this.drawGameBoard();
     this.drawLives();
@@ -198,7 +134,7 @@ function Game() {
   this.pickItem = function() {
     itemID = itemPickList[int(random(itemPickList.length+1))]
     itemID2 = itemPickList[int(random(itemPickList.length+1))]
-
+    
     if (itemID === 'sc') {
       random(0, 1) < 0.9 ? type = 2 : type = .5;
       sizeChangers.push(new SizeChanger(type));
@@ -208,7 +144,12 @@ function Game() {
       fireShields.push(new FireShield())
     } else if (itemID === 's') {
       fireSprites.push(new FireSprite())
+    } else if (itemID === 'd') {
+      drones.push(new Drone())
+    } else if (itemID === 'e') {
+      extraLives.push(new ExtraLife())
     }
+
 
     if (random(0,3)>2) {
       if (itemID2 === 'sc') {
@@ -239,6 +180,101 @@ function Game() {
     }
   }
 
+  this.drawItems = function() {
+   for (var i = attractors.length - 1; i >= 0; i--) {
+      attractor = attractors[i]
+      attractor.update();
+      attractor.display();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        if (heroes[j].state != 'died' && attractor.location.dist(heroes[j].location) < attractor.size) {
+          attractionForce = attractor.attract(heroes[j])
+          heroes[j].applyForce(attractionForce)
+            // accelerationForVolume = abs(heroes[j].acceleration.x) + abs(heroes[j].acceleration.y)
+        }
+      }
+    }
+
+    for (var i = obstacles.length - 1; i >= 0; i--) {
+      obstacle = obstacles[i]
+      obstacle.display();
+      obstacle.update();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+
+        if (obstacle.isIntersecting(heroes[j])) {
+          repulseForce = obstacle.repulse(heroes[j]);
+          heroes[j].applyForce(repulseForce)
+        }
+      }
+    }
+
+    for (var i = heroes.length - 1; i >= 0; i--) {
+      heroes[i].applyForce(this.calculateDrag(heroes[i], 1))
+    }
+
+
+    for (var i = sizeChangers.length - 1; i >= 0; i--) {
+      sizeChangers[i].display();
+      sizeChangers[i].update();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        sizeChangers[i].intersectAction(heroes[j])
+      }
+    }
+
+    for (var i = extraLives.length - 1; i >= 0; i--) {
+      extraLives[i].display();
+      extraLives[i].update();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        extraLives[i].intersectAction(heroes[j])
+      }
+    }
+
+    for (var i = gravityShields.length - 1; i >= 0; i--) {
+      gShield = gravityShields[i]
+      gShield.update();
+      gShield.display();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        hero = heroes[j];
+        opponent = heroes[abs(j - 1)]
+        gShield.intersectAction(hero, opponent);
+      }
+    }
+
+    for (var i = fireShields.length - 1; i >= 0; i--) {
+      fShield = fireShields[i]
+      fShield.update();
+      fShield.display();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        hero = heroes[j];
+        opponent = heroes[abs(j - 1)]
+        fShield.intersectAction(hero, opponent);
+      }
+    }
+    
+    for (var i = fireSprites.length - 1; i >= 0; i--) {
+      fSprite = fireSprites[i]
+      fSprite.update();
+      fSprite.display();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        hero = heroes[j];
+        opponent = heroes[abs(j - 1)]
+        fSprite.intersectAction(hero, opponent);
+      }
+    }
+
+    for (var i = drones.length - 1; i >= 0; i--) {
+      drone = drones[i]
+      drone.applyForce(this.calculateDrag(drone, 1));
+      drone.update();
+      drone.display();
+
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        hero = heroes[j];
+        opponent = heroes[abs(j - 1)]
+        drone.intersectAction(hero, opponent);
+      }
+    }
+  }
+
   this.drawGameBoard = function() {
     fill(0, 0, 0, 0)
     stroke(gameR, gameG, gameB, 15)
@@ -248,6 +284,7 @@ function Game() {
     stroke(gameR, gameG, gameB, 255)
     ellipse(width / 2, height / 2, gameBoardSize, gameBoardSize)
   }
+
   this.drawLives = function() {
     left = heroes[0]
     right = heroes[1]
@@ -271,14 +308,15 @@ function Game() {
         game.won = false;
         spriteSound.stop();
         warpSound.stop();
+        droneSound.stop();
         newGame(playersForRematch[0], playersForRematch[1])
-        frameRate(60);
+        frameRate(gameFrameRate);
       } else if (mouseX > width / 2 && mouseX < width / 2 + 150) {
         // options = new OptionsScreen();
         game = new Game();
         screen = 'setupScreen'
         options.construct();
-        frameRate(60);
+        frameRate(gameFrameRate);
       }
     } 
   }
@@ -339,15 +377,15 @@ function Game() {
     // growSound.play()
   }
 
-  this.calculateDrag = function(hero) {
-    drag = hero.velocity.copy()
+  this.calculateDrag = function(thing, multiplier) {
+    drag = thing.velocity.copy()
     speed = drag.mag()
     if (speed < 1) {
       speed = 1
     }
     drag.normalize()
       // Multiplying constant by hero's mass so bigger has more drag and so is steadier
-    c = -0.012 * hero.mass
+    c = -0.012 * thing.mass * multiplier
     drag.mult(c * speed * speed)
     return drag
   }

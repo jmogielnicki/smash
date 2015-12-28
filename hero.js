@@ -25,6 +25,7 @@ function Hero(player, id, numLives) {
 
   this.sizeOrig = 50
   this.size = this.sizeOrig;
+  this.G = 10000
   this.massMultiplier = 1;
   this.targetSize = this.size;
   constrain(this.size, 5, 100)
@@ -101,37 +102,27 @@ function Hero(player, id, numLives) {
     if ((this.size+targetSize)/2 < 0.01) {
       this.sizeChange = false;
     }
-    
-    // addAmount = amount / (seconds * frameRate());
-
-    // if (abs(this.growAmount) < abs(amount)) {
-    //   this.size += addAmount
-    //   this.growAmount = this.growAmount + addAmount
-    // } else {
-    //   this.growAmount = 0;
-    //   this.growVelocity = 0;
-    //   this.sizeChange = false;
-    // }
 
   }
-  // Trying alternative way to have balls collide and repulse each other
-  // this.repulseAlt = function(opponent) {
-  //   // Direction of the force
-  //   force = p5.Vector.sub(opponent.location, this.location)
-  //   d = force.mag();
-  //   if (d < this.size / 2 + opponent.size / 2) {
-  //     // d = constrain(d, 80, 100)
-  //     force.normalize()
-      
-  //     // Magnitude of force
-  //     strength = (this.G * this.mass * opponent.mass) / (8000)
-      
-  //     // Putting direction and magnitude together
-  //     force.mult(strength)
 
-  //     opponent.applyForce(force)
-  //   }
-  // }
+  // Trying alternative way to have balls collide and repulse each other
+  this.repulseAlt = function(opponent, friend) {
+    // Direction of the force
+    force = p5.Vector.sub(opponent.location, friend.location)
+    d = force.mag();
+    if (d < friend.size / 2 + opponent.size / 2) {
+      // d = constrain(d, 80, 100)
+      force.normalize()
+      
+      // Magnitude of force
+      strength = (friend.G * friend.mass * opponent.mass) / (d*d)
+      
+      // Putting direction and magnitude together
+      force.mult(strength)
+
+      opponent.applyForce(force)
+    }
+  }
   
   this.repulseBall = function(other) {
     if (this.state != 'dying' && other.state != 'dying') {
@@ -142,6 +133,8 @@ function Hero(player, id, numLives) {
       bVectMag = bVect.mag();
 
       if (bVectMag < this.size / 2 + other.size / 2) {
+        // this.repulseAlt(other, this)
+        // this.repulseAlt(this, other)
         // get angle of bVect
         var theta = bVect.heading();
         // precalculate trig values
@@ -215,10 +208,10 @@ function Hero(player, id, numLives) {
         // update velocities
         // JM adding end part: (*(2/this.mass)
 
-        this.velocity.x = (cosine * vFinal[0].x - sine * vFinal[0].y) * (4 / this.mass);
-        this.velocity.y = (cosine * vFinal[0].y + sine * vFinal[0].x) * (4 / this.mass);
-        other.velocity.x = (cosine * vFinal[1].x - sine * vFinal[1].y) * (4 / other.mass);
-        other.velocity.y = (cosine * vFinal[1].y + sine * vFinal[1].x) * (4 / other.mass);
+        this.velocity.x = (cosine * vFinal[0].x - sine * vFinal[0].y) * (3.5 / this.mass);
+        this.velocity.y = (cosine * vFinal[0].y + sine * vFinal[0].x) * (3.5 / this.mass);
+        other.velocity.x = (cosine * vFinal[1].x - sine * vFinal[1].y) * (3.5 / other.mass);
+        other.velocity.y = (cosine * vFinal[1].y + sine * vFinal[1].x) * (3.5 / other.mass);
         velocityDelta = (abs(this.velocity.x + this.velocity.y) + abs(other.velocity.x + other.velocity.y))
 
         this.collisionSound.setVolume(map(velocityDelta, 0, 14, 0.1, 1));
@@ -228,7 +221,7 @@ function Hero(player, id, numLives) {
   }
 
   this.dead = function() {
-    this.numLives--;
+    this.numLives = this.numLives - 1;
     print(this.size)
     print(this.sizeOrig)
     this.size = this.sizeOrig;

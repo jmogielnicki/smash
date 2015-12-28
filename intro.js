@@ -1,7 +1,7 @@
 function IntroScreen() {
   var warningText 
   this.construct = function() {
-    frameRate(60)
+    frameRate(gameFrameRate)
     canvas = createCanvas(windowWidth, windowHeight - 5);
     canvas.parent('canvasContainer');
     gameLEdge = width / 2 - gameBoardSize / 2

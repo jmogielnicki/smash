@@ -43,6 +43,10 @@ function SizeChanger(multiple) {
       this.status = 'expired'
     }
   }
+
+  this.turnOff = function() {
+    this.status = 'expired'    
+  }
   
   
   this.intersectAction = function(hero) {

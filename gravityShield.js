@@ -32,10 +32,10 @@ function GravityShield() {
         this.transp-= 0.5;
       }
       if (this.lifeTimer < 0) {
-        this.status = 'expired'
+        this.turnOff()
       }
       if (this.friend.state === 'dying') {
-        this.status = 'expired'
+        this.turnOff()
       }
       strokeWeight(3)
       stroke(this.r, this.g, this.b,this.transp+10);
@@ -52,6 +52,11 @@ function GravityShield() {
       this.maxSize = this.friend.size + this.extraSize
     }
 
+  }
+
+  this.turnOff = function() {
+    warpSound.setVolume(0);
+    this.status = 'expired'
   }
   
   

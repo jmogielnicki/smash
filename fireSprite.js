@@ -9,9 +9,9 @@ function FireSprite() {
   this.spriteXSpeed = random(0.005, 0.02);
   this.spriteYSpeed = random(0.0005, 0.008);
 
-  this.r = 290;
-  this.g = 127;
-  this.b = 100;
+  this.r = 255;
+  this.g = 94;
+  this.b = 170;
   this.bugRange = 1;
   this.maxBugRange = 200;
   this.activeLifeTimer = 400;
@@ -24,8 +24,8 @@ function FireSprite() {
       this.displayInertState();
     }
     if (this.status === 'active') {
-      stroke(255,0,0);
-      strokeWeight(2);
+      stroke(255,255,255);
+      strokeWeight(1);
       this.size = 12
       fill(this.friend.r, this.friend.g, this.friend.b, 255)
       ellipse(this.location.x, this.location.y, this.size, this.size)
@@ -48,8 +48,7 @@ function FireSprite() {
       this.perlinYStartTime += 0.015
       this.activeLifeTimer--;
       if (this.activeLifeTimer < 0) {
-        spriteSound.stop();
-        this.status = 'expired'
+        this.turnOff();
       }
       if (this.bugRange < this.maxBugRange) {
         this.bugRange = (this.bugRange) * 1.2
@@ -60,6 +59,12 @@ function FireSprite() {
   }
 
   this.adjustAnchor = function() {
+
+  }
+
+  this.turnOff = function() {
+    spriteSound.stop();
+    this.status = 'expired'
 
   }
 
@@ -78,8 +83,7 @@ function FireSprite() {
           this.target.dying();
         }
         fireDeathSound.play();
-        spriteSound.stop();
-        this.status = 'expired'
+        this.turnOff();
       }
     }
   }

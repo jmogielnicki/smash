@@ -27,12 +27,10 @@ function FireShield() {
         this.transp-= 0.5;
       }
       if (this.activeLifeTimer < 0) {
-        this.status = 'expired'
-        this.friend.hasFireShield = false;
+        this.turnOff();
       }
       if (this.friend.state === 'dying') {
-        this.status = 'expired'
-        this.friend.hasFireShield = false;
+        this.turnOff();
       }
       strokeWeight(3)
       stroke(this.r, this.g, this.b, 255);
@@ -51,6 +49,11 @@ function FireShield() {
       this.maxSize = this.friend.size + 20
     }
   }
+
+  this.turnOff = function() {
+    this.status = 'expired'
+    this.friend.hasFireShield = false;
+  }
   
   this.intersectAction = function(hero, opponent) {
     if (this.isIntersecting(hero) && this.status === 'inert') {
@@ -66,8 +69,7 @@ function FireShield() {
       if (this.isIntersecting(this.target) && this.target.hasFireShield === false) {
         this.target.dying();
         fireDeathSound.play();
-        this.friend.hasFireShield = false;
-        this.status = 'expired'
+        this.turnOff();
       }
     }
   }
