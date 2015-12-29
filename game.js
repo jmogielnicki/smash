@@ -8,6 +8,7 @@ function Game() {
   var fireSprites = [];
   var extraLives = [];
   var drones = [];
+  var freezeBombs = [];
   var obstacles = [];
   var itemLists = [];
   var numObstacles = random(1, 8)
@@ -24,7 +25,7 @@ function Game() {
   var itemTimer = 200;
   var itemTimerDecrease = 0;
   // sc = sizeChanger, fs = fireShield, gs = gravityShield, s = fireSprite
-  var itemPickList = ['sc', 'sc', 'fs', 'fs', 'gs', 'gs', 's', 's', 'd', 'd', 'e']
+  var itemPickList = ['sc', 'sc', 'fs', 'fs', 'gs', 'gs', 's', 's', 'd', 'd', 'e', 'fb', 'fb']
 
   this.setupGame = function(player1, player2) {
     frameRate(gameFrameRate);
@@ -57,6 +58,7 @@ function Game() {
     itemLists.push(obstacles);
     itemLists.push(drones);
     itemLists.push(extraLives);
+    itemLists.push(freezeBombs);
 
     for (i = 0; i < int(numObstacles); i++) {
       obstacles[i] = new CircleObstacle(random(gameLEdge + margin, gameREdge - margin), random(gameTEdge + 50, gameBEdge - 50));
@@ -66,16 +68,17 @@ function Game() {
       attractors[i] = new Attractor(random(gameLEdge + margin, gameREdge - margin), random(gameTEdge, gameBEdge), 0, 0, 10);
     }
 
-    for (i = 0; i < 0; i++) {
+    for (i = 0; i < 1; i++) {
       gravityShields[i] = new GravityShield();
       fireSprites[i] = new FireSprite();
       fireShields[i] = new FireShield();
       drones[i] = new Drone();
       extraLives[i] = new ExtraLife();
+      freezeBombs[i] = new FreezeBomb();
     }
 
     for (i = 0; i < 0; i++) {
-      random(0, 1) < 0.9 ? type = 2 : type = .5;
+      random(0, 1) < 0.5 ? type = 2 : type = .5;
       sizeChangers[i] = new SizeChanger(type);
     }
   }
@@ -94,7 +97,7 @@ function Game() {
       heroes[0].repulseBall(heroes[1])
       heroes[1].repulseBall(heroes[0])
     }
-    this.drawItems();
+
 
     this.drawGameBoard();
     this.drawLives();
@@ -128,13 +131,23 @@ function Game() {
 
       }
     }
+    this.drawItems();
+    this.checkForWin();
+  }
 
+  this.checkForWin = function() {
+    for (var i = heroes.length - 1; i >= 0; i--) {
+      hero = heroes[i]
+      if (hero.numLives <= 0) {
+        this.decideWinner(hero);
+      }
+    }    
   }
 
   this.pickItem = function() {
     itemID = itemPickList[int(random(itemPickList.length+1))]
     itemID2 = itemPickList[int(random(itemPickList.length+1))]
-    
+
     if (itemID === 'sc') {
       random(0, 1) < 0.9 ? type = 2 : type = .5;
       sizeChangers.push(new SizeChanger(type));
@@ -148,7 +161,10 @@ function Game() {
       drones.push(new Drone())
     } else if (itemID === 'e') {
       extraLives.push(new ExtraLife())
+    } else if (itemID === 'fb') {
+      freezeBombs.push(new FreezeBomb())
     }
+
 
 
     if (random(0,3)>2) {
@@ -271,6 +287,17 @@ function Game() {
         hero = heroes[j];
         opponent = heroes[abs(j - 1)]
         drone.intersectAction(hero, opponent);
+      }
+    }
+
+    for (var i = freezeBombs.length - 1; i >= 0; i--) {
+      fBomb = freezeBombs[i]
+      fBomb.update();
+      fBomb.display();
+      for (var j = heroes.length - 1; j >= 0; j--) {
+        hero = heroes[j];
+        opponent = heroes[abs(j - 1)]
+        fBomb.intersectAction(hero, opponent);
       }
     }
   }

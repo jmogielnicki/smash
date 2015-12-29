@@ -6,7 +6,7 @@ function Player(id, name, headImage, introSound, r, g, b) {
   this.r = r;
   this.g = g;
   this.b = b;
-  this.transp = 100;
+  this.transp = 130;
   this.location = createVector(0,0);
   this.chosen = false;
   this.strokeWeight = 0;

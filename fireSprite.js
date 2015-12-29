@@ -15,7 +15,7 @@ function FireSprite() {
   this.bugRange = 1;
   this.maxBugRange = 200;
   this.activeLifeTimer = 400;
-  this.icon = 's'
+  this.icon = spriteIcon;
   this.description = 'Fire Sprite: flies around & kills opponent if hit'
 
   this.display = function() {

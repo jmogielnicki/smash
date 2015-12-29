@@ -11,7 +11,7 @@ function GravityShield() {
   this.G = 100;
   this.mass = 20;
   this.extraSize = 130;
-  this.icon = 'g'
+  this.icon = gravityShieldIcon
   this.description = 'Gravity Shield: repels your opponent'
 
  

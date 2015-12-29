@@ -4,7 +4,7 @@ function Drone() {
   this.transp = 10;
   this.minTransp = 10;
   this.activationTimer = 0;
-  this.mass = (this.size / 30) 
+  this.mass = (this.size / 25);
 
   // Location is in parent object
   this.velocity = createVector(0, 0);
@@ -14,7 +14,7 @@ function Drone() {
   this.g = 100;
   this.b = 100;
   this.activeLifeTimer = 800;
-  this.icon = 'd'
+  this.icon = droneIcon
   this.description = 'Drone: hones in on target and tries to push out of ring'
 
   this.display = function() {
@@ -26,7 +26,7 @@ function Drone() {
       stroke(120,120,120);
       strokeWeight(2);
       this.size = 30
-      fill(100,100,100, 180)
+      fill(100,100,100, 100)
       image(this.headImage, this.location.x, this.location.y, this.size, this.size)
       ellipse(this.location.x, this.location.y, this.size, this.size)
     }
@@ -46,9 +46,15 @@ function Drone() {
         this.turnOff();
       }
     }
+
+    // Expire drone if outside arena
+    if (dist(this.location.x, this.location.y, width / 2, height / 2) > gameBoardSize / 2 - (this.size / 2)) {
+      droneDeathSound.play();
+      this.turnOff();
+    }
+
     // Wiping out acceleration so it can be added in again next frame.
     this.acceleration.mult(0)
-
     this.activeLifeTimer--;
   }
 

@@ -9,8 +9,8 @@ function FireShield() {
   this.b = 2;
   this.mass = 20;
   this.activeLifeTimer = 200;
-  this.icon = 'f'
-  this.description = 'Fire Shield: destroys opponent, protects against Fire Sprites'
+  this.icon = flameIcon
+  this.description = 'Fire Shield: destroys opponent, protects against Fire Sprites & Drones'
  
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)
@@ -22,7 +22,6 @@ function FireShield() {
         this.size = (this.size + this.maxSize)/2;
         this.transp = (this.transp + this.minTransp)/2;  
         this.b+=0.5
-      this.activeLifeTimer--;
       if (this.activeLifeTimer < 50) {
         this.transp-= 0.5;
       }
@@ -44,6 +43,7 @@ function FireShield() {
       this.status = 'expired'
     }
     if (this.status === 'active') {
+      this.activeLifeTimer--;
       this.location.x = this.friend.location.x
       this.location.y = this.friend.location.y
       this.maxSize = this.friend.size + 20

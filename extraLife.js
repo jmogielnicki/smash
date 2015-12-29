@@ -7,7 +7,7 @@ function ExtraLife() {
   this.r = 255;
   this.g = 221;
   this.b = 0;
-  this.icon = '+1'
+  this.icon = heartIcon;
   this.description = 'Extra Life!'
 
   this.display = function() {
@@ -15,7 +15,7 @@ function ExtraLife() {
     if (this.status === 'inert') {
       this.displayInertState();
       // Adding some extra stuff since it's a +1 life
-      strokeWeight(3);
+      strokeWeight(1);
       stroke(255,255,0)
       fill(this.r, this.g, this.b, 0);
       ellipse(this.location.x, this.location.y, this.size, this.size); 

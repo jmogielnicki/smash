@@ -16,8 +16,12 @@ function Hero(player, id, numLives) {
   this.collisionSound = ballHitSound;
 
   this.headImage = player.headImage;
+
+  // This frozen does not work for freezeBomb, so using a different variable
   this.frozen = false;
   this.freezeFrames = 0;
+
+  this.freezeBombed = false;
   this.location = createVector(this.x, this.y);
   this.velocity = createVector(0, 0);
   this.acceleration = createVector(0, 0);
@@ -37,7 +41,8 @@ function Hero(player, id, numLives) {
   this.r = player.r
   this.g = player.g
   this.b = player.b
-  this.transp = 100;
+  this.transp = 130;
+  this.transpOrig = this.transp;
   this.hasFireShield = false;
 
   this.display = function() {
@@ -69,7 +74,7 @@ function Hero(player, id, numLives) {
     }
 
     // Call them dead when faded away
-    if (this.transp === 0) {
+    if (this.transp <= 0) {
       this.dead();
     }
 
@@ -226,18 +231,11 @@ function Hero(player, id, numLives) {
     print(this.sizeOrig)
     this.size = this.sizeOrig;
     this.targetSize = this.size;
-    if (this.numLives <= 0) {
-      this.lost()
-    } else {
+    if (this.numLives > 0) {
       game.resetHero(this)
     }
-
   }
 
-
-  this.lost = function() {
-    game.decideWinner(this);
-  }
 
   this.dying = function() {
     if (this.state != 'dying') {
@@ -262,27 +260,29 @@ function Hero(player, id, numLives) {
   }
 
   this.keypresses = function() {
-    if (this.velocity > 5) {
-      forceAmount = 0
-    } else {
-      forceAmount = this.mass / 4;
-    }
+    if (this.freezeBombed === false) {
+      if (this.velocity > 5) {
+        forceAmount = 0
+      } else {
+        forceAmount = this.mass / 4;
+      }
 
-    leftForce = createVector(forceAmount * -1, 0)
-    rightForce = createVector(forceAmount, 0)
-    upForce = createVector(0, forceAmount * -1)
-    downForce = createVector(0, forceAmount)
-    if ((keyIsDown(LEFT_ARROW) && this.id === 1) || (keyIsDown(65) && this.id === 0)) {
-      this.applyForce(leftForce)
-    }
-    if ((keyIsDown(RIGHT_ARROW) && this.id === 1) || (keyIsDown(68) && this.id === 0)) {
-      this.applyForce(rightForce)
-    }
-    if ((keyIsDown(DOWN_ARROW) && this.id === 1) || (keyIsDown(83) && this.id === 0)) {
-      this.applyForce(downForce)
-    }
-    if ((keyIsDown(UP_ARROW) && this.id === 1) || (keyIsDown(87) && this.id === 0)) {
-      this.applyForce(upForce)
+      leftForce = createVector(forceAmount * -1, 0)
+      rightForce = createVector(forceAmount, 0)
+      upForce = createVector(0, forceAmount * -1)
+      downForce = createVector(0, forceAmount)
+      if ((keyIsDown(LEFT_ARROW) && this.id === 1) || (keyIsDown(65) && this.id === 0)) {
+        this.applyForce(leftForce)
+      }
+      if ((keyIsDown(RIGHT_ARROW) && this.id === 1) || (keyIsDown(68) && this.id === 0)) {
+        this.applyForce(rightForce)
+      }
+      if ((keyIsDown(DOWN_ARROW) && this.id === 1) || (keyIsDown(83) && this.id === 0)) {
+        this.applyForce(downForce)
+      }
+      if ((keyIsDown(UP_ARROW) && this.id === 1) || (keyIsDown(87) && this.id === 0)) {
+        this.applyForce(upForce)
+      }
     }
   }
 }

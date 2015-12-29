@@ -16,6 +16,7 @@ CircleObject.prototype.initializeFromMaster = function() {
 }
 
 CircleObject.prototype.displayInertState = function() {
+  image(this.icon, this.location.x, this.location.y, this.size*.6, this.size*.6)
   noStroke;
   strokeWeight(1);
   stroke(255,255,255,100)
@@ -27,7 +28,6 @@ CircleObject.prototype.displayInertState = function() {
   noStroke();
   textStyle(NORMAL)
   textAlign(CENTER, CENTER);
-  text(this.icon, this.location.x, this.location.y);
   this.inertTimer--;
   if (this.status === 'inert' && this.inertTimer < 0) {
     this.turnOff();

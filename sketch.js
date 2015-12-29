@@ -22,7 +22,7 @@ var gameFrameRate = 50;
  
 function preload() {
   loadStuff();
-  players.push(new Player(0, 'Riley', rileyHead, introRiley, 0, 160, 176));
+  players.push(new Player(0, 'Riley', rileyHead, introRiley, 177,241,255));
   players.push(new Player(1, 'Kale', kaleHead, introKale, 237, 201, 81));
   players.push(new Player(2, 'John', jmHead, introJohn, 235, 104, 65));
   players.push(new Player(3, 'Petry', petryHead, introPetry, 192, 108, 132));
@@ -31,7 +31,7 @@ function preload() {
   players.push(new Player(6, 'Mimi', mimiHead, introMimi, 246, 114, 128));
   players.push(new Player(7, 'Julie', julieHead, introJulie, 199, 244, 100));
   players.push(new Player(8, 'Rania', raniaHead, introRania, 55, 159, 100));
-  players.push(new Player(9, 'Katrina', katrinaHead, introKatrina, 147, 204, 198));
+  players.push(new Player(9, 'Katrina', katrinaHead, introKatrina, 254,152,41));
   players.push(new Player(10, 'Oren', orenHead, introOren, 181, 98, 43));
   players.push(new Player(11, 'Davis', davisHead, introDavis, 205, 187, 153));
   
@@ -121,6 +121,8 @@ function mouseReleased() {
 function loadStuff() {
   soundFormats('mp3', 'ogg');
   myFont = loadFont('assets/fonts/chunkFive.otf')
+
+  // Sound effects
   faceSmashIntro = loadSound('assets/sounds/faceSmash.mp3');
   choosePlayersSound = loadSound('assets/sounds/choosePlayers.mp3');
   readyFightSound = loadSound('assets/sounds/readyFight.mp3');
@@ -128,10 +130,11 @@ function loadStuff() {
   fightMusic = loadSound('assets/sounds/fightMusic.mp3');
   ballHitSound = loadSound('assets/sounds/ballHit.mp3');
   itemSound = loadSound('assets/sounds/wallHit.mp3');
-  deathSound = loadSound('assets/sounds/death2.mp3');
+  deathSound = loadSound('assets/sounds/death.mp3');
   laughSound = loadSound('assets/sounds/laugh.mp3');
   warpSound = loadSound('assets/sounds/warpOrgan.mp3');
   droneSound = loadSound('assets/sounds/drone.mp3');
+  droneDeathSound = loadSound('assets/sounds/droneDeath.mp3');
   winSound = loadSound('assets/sounds/cheerShort.mp3');
   winJingle = loadSound('assets/sounds/winJingle.mp3');
   extraLifeSound = loadSound('assets/sounds/extraLife.mp3');
@@ -142,18 +145,9 @@ function loadStuff() {
   fireDeathSound = loadSound('assets/sounds/fireDeath.mp3');
   forceFieldSound = loadSound('assets/sounds/forceField.mp3');
   spriteSound = loadSound('assets/sounds/spriteSound.mp3');
-  jmHead = loadImage('assets/images/jmHead.png');
-  rileyHead = loadImage('assets/images/rileyHead2.png');
-  kaleHead = loadImage('assets/images/kaleHead.png');
-  petryHead = loadImage('assets/images/petryHead.png');
-  bopbopHead = loadImage('assets/images/bopbopHead.png');
-  eliHead = loadImage('assets/images/eliHead.png');
-  mimiHead = loadImage('assets/images/mimiHead.png');
-  julieHead = loadImage('assets/images/julieHead.png');
-  raniaHead = loadImage('assets/images/raniaHead.png');
-  katrinaHead = loadImage('assets/images/katrinaHead.png');
-  orenHead = loadImage('assets/images/orenHead.png');
-  davisHead = loadImage('assets/images/davisHead.png');
+  freezeSound = loadSound('assets/sounds/freeze.mp3');
+  
+  // Intro Names
   introJohn = loadSound('assets/sounds/introJohn.mp3');
   introRiley = loadSound('assets/sounds/introRiley.mp3');
   introKale = loadSound('assets/sounds/introKale.mp3');
@@ -167,4 +161,27 @@ function loadStuff() {
   introDavis = loadSound('assets/sounds/introDavis.mp3');
   introPetry = loadSound('assets/sounds/introPetry.mp3');
   
+  // Head Images
+  jmHead = loadImage('assets/images/jmHead.png');
+  rileyHead = loadImage('assets/images/rileyHead2.png');
+  kaleHead = loadImage('assets/images/kaleHead.png');
+  petryHead = loadImage('assets/images/petryHead.png');
+  bopbopHead = loadImage('assets/images/bopbopHead.png');
+  eliHead = loadImage('assets/images/eliHead.png');
+  mimiHead = loadImage('assets/images/mimiHead.png');
+  julieHead = loadImage('assets/images/julieHead.png');
+  raniaHead = loadImage('assets/images/raniaHead.png');
+  katrinaHead = loadImage('assets/images/katrinaHead.png');
+  orenHead = loadImage('assets/images/orenHead.png');
+  davisHead = loadImage('assets/images/davisHead.png');
+
+  // Item Icons
+  flameIcon = loadImage('assets/icons/flame.png');
+  gravityShieldIcon = loadImage('assets/icons/gravityShield.png');
+  heartIcon = loadImage('assets/icons/heart.png');
+  droneIcon = loadImage('assets/icons/drone.png');
+  spriteIcon = loadImage('assets/icons/sprite.png');
+  increaseIcon = loadImage('assets/icons/increase.png');
+  decreaseIcon = loadImage('assets/icons/decrease.png');
+  snowFlakeIcon = loadImage('assets/icons/snowFlake.png');
 }

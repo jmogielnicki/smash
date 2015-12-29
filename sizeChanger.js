@@ -7,13 +7,13 @@ function SizeChanger(multiple) {
     this.r = gameR2
     this.g = gameG2
     this.b = gameB2
-    this.icon = '+'
+    this.icon = increaseIcon;
     this.description = 'Expander: Makes you grow temporarily'
   } else {
     this.r = gameR
     this.g = gameG
     this.b = gameB
-    this.icon = '-'
+    this.icon = decreaseIcon;
     this.description = 'Reducer: Makes you shrink temporarily'
   }
     
