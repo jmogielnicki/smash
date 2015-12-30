@@ -146,6 +146,11 @@ function loadStuff() {
   forceFieldSound = loadSound('assets/sounds/forceField.mp3');
   spriteSound = loadSound('assets/sounds/spriteSound.mp3');
   freezeSound = loadSound('assets/sounds/freeze.mp3');
+  shatterSound = loadSound('assets/sounds/shatter.mp3');
+  startUpSound = loadSound('assets/sounds/startUp.mp3');
+  activateSound = loadSound('assets/sounds/activate.mp3');
+  clickSound = loadSound('assets/sounds/click.mp3');
+  explodeSound = loadSound('assets/sounds/explode.mp3');
   
   // Intro Names
   introJohn = loadSound('assets/sounds/introJohn.mp3');
@@ -184,4 +189,5 @@ function loadStuff() {
   increaseIcon = loadImage('assets/icons/increase.png');
   decreaseIcon = loadImage('assets/icons/decrease.png');
   snowFlakeIcon = loadImage('assets/icons/snowFlake.png');
+  bombIcon = loadImage('assets/icons/bomb.png');
 }

@@ -3,11 +3,15 @@ function HowToPlayScreen() {
   this.itemsList = [];
   // this.itemsList.push(new Hero(players[0], 0, 1))
   this.itemsList.push(new FireShield())
+  this.itemsList.push(new ProximityBomb())
   this.itemsList.push(new GravityShield(20, 1))
   this.itemsList.push(new SizeChanger(2))
   this.itemsList.push(new SizeChanger(.3))
   this.itemsList.push(new FireSprite())
-  this.itemsList.push(new CircleObstacle(0, 0))
+  this.itemsList.push(new Drone())
+  this.itemsList.push(new FreezeBomb())
+  this.itemsList.push(new ExtraLife())
+
 
   this.construct = function() {
     frameRate(60)
@@ -23,7 +27,7 @@ function HowToPlayScreen() {
 
   this.animate = function() {
 
-    background(0, 0, 0);
+    background(0, 0, 0, 50);
     textFont("Georgia")
     textStyle(BOLD)
     strokeWeight(0)
@@ -38,7 +42,7 @@ function HowToPlayScreen() {
     imageMode(CENTER)
     textSize(24);
     fill(gameR2, gameG2, gameB2)
-    text("Items & Obstacles", width / 2, height / 2 - 70)
+    text("Items", width / 2, height / 2 - 70)
 
 
     for (i in this.itemsList) {
@@ -48,12 +52,13 @@ function HowToPlayScreen() {
         item.size = 40;
         item.transp = 100;
       }
-      itemYPos = ((height / 2) - 20) + (i * 40)
+      itemYPos = ((height / 2) - 60) + (i * 30) + item.size
       item.location.x = width / 2 - 145
       item.location.y = itemYPos
       item.inertTimer = 100000000
       fill(item.r, item.g, item.b);
       item.display();
+      noStroke();
       itemDescription = item.description
       textSize(12);
       textAlign(LEFT, CENTER)
@@ -61,18 +66,7 @@ function HowToPlayScreen() {
       text(itemDescription, (width / 2) - 130 + item.size / 2, itemYPos)
     }
 
-    // Drawing the gameBoard
-    fill(0, 0, 0, 0)
-    stroke(gameR, gameG, gameB, 15)
-    strokeWeight(150);
-    ellipse(width / 2, height / 2, gameBoardSize + 150, gameBoardSize + 150)
-    strokeWeight(5);
-    stroke(gameR, gameG, gameB, 255)
-    ellipse(width / 2, height / 2, gameBoardSize, gameBoardSize)
-
-    // for (i in itemsList) {
-    //   itemsList[i].display();
-    // }
+    game.drawGameBoard();
 
   }
 }

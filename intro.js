@@ -14,8 +14,7 @@ function IntroScreen() {
   }
 
   this.animate = function() {
-
-
+    textFont(myFont)
     background(0, 0, 0);
     strokeWeight(0)
     fill(gameR, gameG, gameB)

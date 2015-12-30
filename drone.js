@@ -4,7 +4,7 @@ function Drone() {
   this.transp = 10;
   this.minTransp = 10;
   this.activationTimer = 0;
-  this.mass = (this.size / 25);
+  this.mass = (this.size / 23);
 
   // Location is in parent object
   this.velocity = createVector(0, 0);
@@ -13,7 +13,7 @@ function Drone() {
   this.r = 100;
   this.g = 100;
   this.b = 100;
-  this.activeLifeTimer = 800;
+  this.activeLifeTimer = 600;
   this.icon = droneIcon
   this.description = 'Drone: hones in on target and tries to push out of ring'
 

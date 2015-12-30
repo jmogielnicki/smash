@@ -20,7 +20,7 @@ CircleObject.prototype.displayInertState = function() {
   noStroke;
   strokeWeight(1);
   stroke(255,255,255,100)
-  fill(this.r, this.g, this.b, 100);
+  fill(this.r, this.g, this.b, 120);
   ellipse(this.location.x, this.location.y, this.size, this.size); 
   fill(this.r, this.g, this.b, 155);
   textSize(18);

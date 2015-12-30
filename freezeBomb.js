@@ -6,9 +6,9 @@ function FreezeBomb() {
   this.r = 0;
   this.g = 160;
   this.b = 176;
-  this.transp = 100;
+  this.transp = 200;
   this.fadeOffTimer = 100;
-  this.activeLifeTimer = 100;
+  this.activeLifeTimer = 50;
   this.icon = snowFlakeIcon;
   this.description = 'Freeze Bomb: disables your opponent'
 
@@ -17,9 +17,9 @@ function FreezeBomb() {
     if (this.status === 'inert') {
       this.displayInertState();
     } else if (this.status === 'active') {
-      fill(this.r, this.g, this.b, this.transp);
-      noStroke();
-      ellipse(this.target.location.x, this.target.location.y, this.target.size+1, this.target.size+1)
+      // fill(this.r, this.g, this.b, this.transp);
+      // noStroke();
+      // ellipse(this.target.location.x, this.target.location.y, this.target.size+1, this.target.size+1)
     }
   }
 
@@ -43,15 +43,23 @@ function FreezeBomb() {
     if (this.fadeOffTimer < 0) {
       this.turnOff();
     } else {
-      this.transp -= 1;
+      this.target.transpTemp -= 1.5;
       this.target.transp += 1;
       this.fadeOffTimer--;
+    }
+    if (this.fadeOffTimer < 2) {
+      this.target.rTemp = 255;
+      this.target.gTemp = 255;
+      this.target.bTemp = 255;
+      this.target.transpTemp = 255;
     }
   }
 
   this.turnOff = function() {
     this.target.transp = this.target.transpOrig;
     this.target.freezeBombed = false;
+    this.target.covered = false;
+    shatterSound.play();
     this.status = 'expired';
   }
 
@@ -62,6 +70,12 @@ function FreezeBomb() {
       this.target = opponent;
       this.target.transp = 10;
       this.target.freezeBombed = true;
+      this.target.covered = true;
+      this.target.rTemp = this.r
+      this.target.gTemp = this.g
+      this.target.bTemp = this.b
+      this.target.transpTemp = this.transp
+
       fill(0,160,176,200);
       ellipse(this.location.x, this.location.y, 1700, 1700)
       this.status = 'active'

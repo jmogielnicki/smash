@@ -41,9 +41,17 @@ function Hero(player, id, numLives) {
   this.r = player.r
   this.g = player.g
   this.b = player.b
+
+  // temp colors for when covered (e.g. by freezebomb)
+  this.rTemp = player.r
+  this.gTemp = player.g
+  this.bTemp = player.b
+  this.transpTemp = 0;
+
   this.transp = 130;
   this.transpOrig = this.transp;
   this.hasFireShield = false;
+  this.covered = false;
 
   this.display = function() {
     noStroke;
@@ -51,6 +59,9 @@ function Hero(player, id, numLives) {
     fill(this.r, this.g, this.b, this.transp);
     image(this.headImage, this.location.x, this.location.y, this.size, this.size)
     ellipse(this.location.x, this.location.y, this.size, this.size);
+    if (this.covered) {
+      this.covering();
+    }
   }
 
   this.update = function() {
@@ -99,6 +110,14 @@ function Hero(player, id, numLives) {
       this.collisionSound = ballHitSound;
     }
 
+  }
+
+  // So that items can apply a covering to the hero
+  this.covering = function() {
+    noStroke;
+    strokeWeight(0);
+    fill(this.rTemp, this.gTemp, this.bTemp, this.transpTemp);
+    ellipse(this.location.x, this.location.y, this.size+1, this.size+1);
   }
 
   this.grow = function(targetSize, seconds) {
