@@ -397,26 +397,18 @@ function Game() {
     strokeWeight(0)
     fill(left.rOrig, left.gOrig, left.bOrig);
     for (var i = 0; i < left.numLives; i++) {
-      if (i <= 4) {
-        xPos = gameLEdge - 40
-        columnIndex = i;
-      } else {
-        xPos = gameLEdge - 60
-        columnIndex = i - 5
-      }
-      yPos = (height / 2) - 50 + ((columnIndex + 1) * 20)
+      xColumnIndex = int((i)/5)
+      yColumnIndex = i % 5
+      xPos = gameLEdge - (xColumnIndex *20) - 40
+      yPos = (height / 2) - 50 + ((yColumnIndex + 1) * 20)
       ellipse(xPos, yPos, 10, 10)
     }
     fill(right.rOrig, right.gOrig, right.bOrig);
     for (var i = 0; i < right.numLives; i++) {
-      if (i <= 4) {
-        xPos = gameREdge + 40
-        columnIndex = i;
-      } else {
-        xPos = gameREdge + 60
-        columnIndex = i - 5
-      }
-      yPos = (height / 2) - 50 + ((columnIndex + 1) * 20)
+      xColumnIndex = int((i)/5)
+      yColumnIndex = i % 5
+      xPos = gameREdge + (xColumnIndex * 20) + 40
+      yPos = (height / 2) - 50 + ((yColumnIndex + 1) * 20)
       ellipse(xPos, yPos, 10, 10)
     }
   }
