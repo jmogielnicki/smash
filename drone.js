@@ -1,21 +1,24 @@
 function Drone() {
+  this.id = 'd'
+  this.r = 177; 
+  this.g = 223;
+  this.b = 52;
   this.initializeFromMaster();
   this.status = 'inert'
   this.transp = 10;
   this.minTransp = 10;
   this.activationTimer = 0;
-  this.mass = (this.size / 23);
+  this.mass = (this.size / 25);
 
   // Location is in parent object
   this.velocity = createVector(0, 0);
   this.acceleration = createVector(0, 0);
 
-  this.r = 100;
-  this.g = 100;
-  this.b = 100;
+
   this.activeLifeTimer = 600;
   this.icon = droneIcon
   this.description = 'Drone: hones in on target and tries to push out of ring'
+
 
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)
@@ -23,11 +26,14 @@ function Drone() {
       this.displayInertState();
     }
     if (this.status === 'active') {
-      stroke(120,120,120);
+      stroke(255);
       strokeWeight(2);
-      this.size = 30
-      fill(100,100,100, 100)
+      noStroke();
+      this.size = 40
+      fill(this.friend.r, this.friend.g, this.friend.b, 100)
       image(this.headImage, this.location.x, this.location.y, this.size, this.size)
+      ellipse(this.location.x, this.location.y, this.size, this.size)
+      fill(100, 100, 100, 70)
       ellipse(this.location.x, this.location.y, this.size, this.size)
     }
   }

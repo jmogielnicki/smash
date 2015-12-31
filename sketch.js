@@ -1,8 +1,4 @@
 var screen = 'introScreen';
-var gameInProgress = false;
-var setupInProgress = false;
-var introInProgress = true;
-var howToPlayInProgress = false; 
 var gameBoardSize = 600;
 var gameLEdge;
 var gameREdge;
@@ -19,6 +15,10 @@ var players = [];
 var isOpera, isFirefox, isSafari, isChrome, isIE
 var browser;
 var gameFrameRate = 50;
+var itemFrequencyList = ['Low', 'Medium', 'High']
+var itemFrequencyChosen = 1;
+var buttons = [];
+
  
 function preload() {
   loadStuff();
@@ -68,14 +68,11 @@ function draw() {
 
   if (screen === 'gameScreen' && game.won === false) {
     game.drawGame()
-    }
-  if (screen === 'setupScreen') {
+    } else if (screen === 'setupScreen') {
     options.animate();
-  }
-  if (screen === 'introScreen') {
+  } else if (screen === 'introScreen') {
     intro.animate();
-  }
-  if (screen === 'howToPlayScreen') {
+  } else if (screen === 'howToPlayScreen') {
     howToPlay.animate();
   }
 }
@@ -103,20 +100,11 @@ function mouseReleased() {
   } else if (screen === 'introScreen') {
     intro.checkAction();
   } else if (screen === 'howToPlayScreen'){
-    screen = 'introScreen'
-    intro.construct();
+    howToPlay.checkAction();
   } else if (screen === 'gameScreen' && game.won === true) {
     game.checkAction();
   }
 }
-
-// function keyPressed() {
-//   if (keyIsDown(SHIFT)) {
-//     frameRate(1);
-//   } else {
-//     frameRate(10);
-//   }
-// }
 
 function loadStuff() {
   soundFormats('mp3', 'ogg');
@@ -125,6 +113,10 @@ function loadStuff() {
   // Sound effects
   faceSmashIntro = loadSound('assets/sounds/faceSmash.mp3');
   choosePlayersSound = loadSound('assets/sounds/choosePlayers.mp3');
+  beepSelectSound = loadSound('assets/sounds/beepSelect.mp3');
+  beepDeselectSound = loadSound('assets/sounds/beepDeselect.mp3');
+  clickSelectSound = loadSound('assets/sounds/clickSelect.mp3');
+  clickBeepSound = loadSound('assets/sounds/clickBeep.mp3');
   readyFightSound = loadSound('assets/sounds/readyFight.mp3');
   introMusic = loadSound('assets/sounds/introMusic.mp3');
   fightMusic = loadSound('assets/sounds/fightMusic.mp3');

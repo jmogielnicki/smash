@@ -1,5 +1,6 @@
 function FireSprite() {
-  this.initializeFromMaster();
+  this.id = 's'
+
   this.status = 'inert'
   this.transp = 255;
   this.minTransp = 10;
@@ -17,6 +18,7 @@ function FireSprite() {
   this.activeLifeTimer = 400;
   this.icon = spriteIcon;
   this.description = 'Fire Sprite: flies around & kills opponent if hit'
+  this.initializeFromMaster();
 
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)

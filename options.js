@@ -22,14 +22,23 @@ function OptionsScreen() {
     gameBEdge = height/2 + gameBoardSize/2
     // Putting this here because it depends on canvas being already created
     this.startButtonVector = createVector(width / 2, gameBEdge-100)
-      choosePlayersSound.play();
+    choosePlayersSound.play();
+
+    changeItemsButton = new Button(width / 2 - 70, height / 2 + 190, 120, 50, 'Change Options', 16, gameR2, gameG2, gameB2)
+    startGameButton = new Button(width / 2 + 70, height / 2 + 190, 120, 50, 'Start Game', 18, gameR, gameG, gameB)
   }
 
   this.checkSelection = function() {
+    if (changeItemsButton.clicked()) {
+      screen = 'howToPlayScreen';
+      howToPlay.construct();
+    }
+
     // Start new game
-    if (dist(mouseX, mouseY, this.startButtonVector.x, this.startButtonVector.y) < this.startButtonSize / 2 && this.complete === true) {
+    if (startGameButton.clicked() && this.complete == true) {
       newGame(this.selectedPlayers[0], this.selectedPlayers[1])
     }
+
     // Figure out if players are chosen
     for (i in players) {
       playeri = players[i];
@@ -127,15 +136,13 @@ function OptionsScreen() {
       ellipse(player.location.x, player.location.y, player.size, player.size)
     }
     if (this.complete === true) {
-      fill(gameR2, gameG2, gameB2, 200);
-      stroke(gameR2,gameG2,gameB2, 255)
-      ellipse(this.startButtonVector.x, this.startButtonVector.y, this.startButtonSize, this.startButtonSize)
-      fill(200,200,200, 255);
-      textAlign(CENTER, CENTER)
-      textSize(18)
-      textStyle(BOLD)
-      text('Start\nGame', this.startButtonVector.x, this.startButtonVector.y-10)
+      startGameButton.active = true;
+    } else {
+      startGameButton.active = false;
     }
+    startGameButton.display();
+    changeItemsButton.display();
+
       // Drawing the gameBoard
     fill(0, 0, 0, 0)
     stroke(gameR, gameG, gameB, 15)

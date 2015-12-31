@@ -21,7 +21,7 @@ function Hero(player, id, numLives) {
   this.frozen = false;
   this.freezeFrames = 0;
 
-  this.freezeBombed = false;
+  this.disabled = false;
   this.location = createVector(this.x, this.y);
   this.velocity = createVector(0, 0);
   this.acceleration = createVector(0, 0);
@@ -246,10 +246,9 @@ function Hero(player, id, numLives) {
 
   this.dead = function() {
     this.numLives = this.numLives - 1;
-    print(this.size)
-    print(this.sizeOrig)
     this.size = this.sizeOrig;
     this.targetSize = this.size;
+    this.disabled = false;
     if (this.numLives > 0) {
       game.resetHero(this)
     }
@@ -258,12 +257,13 @@ function Hero(player, id, numLives) {
 
   this.dying = function() {
     if (this.state != 'dying') {
-      this.r = 250;
-      this.g = 20;
-      this.b = 20;
       this.state = 'dying'
       deathSound.play();
     }
+    this.disabled = true;
+    this.r = 250;
+    this.g = 20;
+    this.b = 20;
 
   }
 
@@ -279,7 +279,7 @@ function Hero(player, id, numLives) {
   }
 
   this.keypresses = function() {
-    if (this.freezeBombed === false) {
+    if (this.disabled === false) {
       if (this.velocity > 5) {
         forceAmount = 0
       } else {

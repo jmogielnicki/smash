@@ -1,14 +1,14 @@
 function ExtraLife() {
-  this.initializeFromMaster();
+  this.id = 'e'
   this.status = 'inert'
   this.transp = 255;
   this.minTransp = 10;
-
   this.r = 255;
   this.g = 221;
   this.b = 0;
   this.icon = heartIcon;
   this.description = 'Extra Life!'
+  this.initializeFromMaster();
 
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)

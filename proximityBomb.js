@@ -1,11 +1,12 @@
 function ProximityBomb() {
-  this.initializeFromMaster();
+
+  this.id = 'pb'
   this.status = 'inert'
   this.transp = 255;
   this.minTransp = 10;
   this.startingUpTimer = 80;
   this.explodeTimer = 30;
-  blinkTimer = 170;
+  this.blinkTimer = 8;
   this.r = 192;
   this.g = 144;
   this.b = 240;
@@ -17,7 +18,8 @@ function ProximityBomb() {
   this.bActive = 60;
   this.mass = 20;
   this.icon = bombIcon
-  this.description = 'ProximityBomb: once set, will explode if opponent comes within range'
+  this.description = 'Proximity Bomb: once set, will explode if opponent gets too close'
+  this.initializeFromMaster();
  
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)
@@ -40,7 +42,7 @@ function ProximityBomb() {
     }
     if (this.status == 'exploding') {
       noStroke();
-      fill(this.rOrig, this.gOrig, this.bOrig, this.transp)
+      fill(248,70,0, this.transp)
       ellipse(this.location.x, this.location.y, this.size, this.size)
     }
   } 
@@ -60,8 +62,8 @@ function ProximityBomb() {
       }
     }
     if (this.status === 'active') {
-      blinkTimer--;
-      if (blinkTimer < 10) {
+      this.blinkTimer--;
+      if (this.blinkTimer < 6) {
         this.rActive = this.friend.rOrig
         this.gActive = this.friend.gOrig
         this.bActive = this.friend.bOrig
@@ -70,8 +72,8 @@ function ProximityBomb() {
         this.gActive = 60
         this.bActive = 60
       }
-      if (blinkTimer < 0) {
-        blinkTimer = 200;
+      if (this.blinkTimer < 0) {
+        this.blinkTimer = 200;
       }
     }
     if (this.status == 'exploding') {
@@ -92,7 +94,7 @@ function ProximityBomb() {
       this.status = 'startingUp'
       this.target = opponent;
       this.friend = hero;
-      this.size = 200;
+      this.size = 175;
       this.transp = 6;
       this.r = this.friend.r
       this.g = this.friend.g
@@ -101,7 +103,7 @@ function ProximityBomb() {
       startUpSound.play();
     }
     if (this.status === 'active') {
-      if (this.isIntersecting(this.target) && this.target.hasFireShield === false) {
+      if (this.isIntersecting(this.target)) {
         this.target.dying();
         explodeSound.play();
         this.transp = 100;

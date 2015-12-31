@@ -1,8 +1,9 @@
 function SizeChanger(multiple) {
-  this.initializeFromMaster();
+
   this.multiple = multiple;
   this.status = 'inert'
-  this.activeLifeTimer = 400;
+  this.activeLifeTimer = 300;
+  multiple > 1? this.id = 'scb': this.id = 'scs'
   if (this.multiple > 1){
     this.r = gameR2
     this.g = gameG2
@@ -16,6 +17,7 @@ function SizeChanger(multiple) {
     this.icon = decreaseIcon;
     this.description = 'Reducer: Makes you shrink temporarily'
   }
+  this.initializeFromMaster();
     
   this.display = function() {
     if (this.status === 'inert') {
@@ -25,23 +27,28 @@ function SizeChanger(multiple) {
   
   this.update = function() {
     if (this.status === 'active') {
-    this.activeLifeTimer--;
-    this.friend.sizeChange = true;
-    }
-    if (this.activeLifeTimer < 0 && this.status === 'active') {
-      // debugger
+      this.activeLifeTimer--;
       this.friend.sizeChange = true;
-      this.friend.targetSize = this.friend.size/this.multiple;
-      this.friend.massMultiplier = 1;
-      if (this.multiple > 1) {
-        shrinkSound.play()
-      } else {
-        growSound.play();
+      if (this.friend.state == 'dying' || this.friend.state == 'dead') {
+        this.turnOff();
+      }
+      if (this.activeLifeTimer < 0) {
+        this.friend.sizeChange = true;
+        this.friend.targetSize = this.friend.size/this.multiple;
+        this.friend.massMultiplier = 1;
+        if (this.multiple > 1) {
+          shrinkSound.play()
+        } else {
+          growSound.play();
+
+        }
+        this.friend.growVelocity = .5;
+        this.turnOff();
 
       }
-      this.friend.growVelocity = .5;
-      this.status = 'expired'
     }
+
+
   }
 
   this.turnOff = function() {

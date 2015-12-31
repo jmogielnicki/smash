@@ -1,5 +1,6 @@
 function GravityShield() {
-  this.initializeFromMaster();
+  this.id = 'gs'
+
   this.status = 'inert'
   this.transp = 255;
   this.minTransp = 10;
@@ -13,15 +14,16 @@ function GravityShield() {
   this.extraSize = 130;
   this.icon = gravityShieldIcon
   this.description = 'Gravity Shield: repels your opponent'
+  this.initializeFromMaster();
 
  
   this.display = function() {
 
-    fill(this.r, this.g, this.b, this.transp)
     if (this.status === 'inert') {
       this.displayInertState();
     }
     if (this.status === 'active') {
+      fill(this.r, this.g, this.b, this.transp)
       this.activeTimer--;
       if (this.activeTimer >= 0) {
         this.transp = (this.transp + this.minTransp)/2;  
@@ -31,7 +33,7 @@ function GravityShield() {
       if (this.lifeTimer < 50) {
         this.transp-= 0.5;
       }
-      if (this.lifeTimer < 0) {
+      if (this.lifeTimer < 0 || this.transp < 0) {
         this.turnOff()
       }
       if (this.friend.state === 'dying') {

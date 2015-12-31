@@ -1,5 +1,6 @@
 function FreezeBomb() {
-  this.initializeFromMaster();
+
+  this.id = 'fb'
   this.status = 'inert'
   this.minTransp = 10;
 
@@ -11,6 +12,7 @@ function FreezeBomb() {
   this.activeLifeTimer = 50;
   this.icon = snowFlakeIcon;
   this.description = 'Freeze Bomb: disables your opponent'
+  this.initializeFromMaster();
 
   this.display = function() {
     fill(this.r, this.g, this.b, 255)
@@ -57,7 +59,7 @@ function FreezeBomb() {
 
   this.turnOff = function() {
     this.target.transp = this.target.transpOrig;
-    this.target.freezeBombed = false;
+    this.target.disabled = false;
     this.target.covered = false;
     shatterSound.play();
     this.status = 'expired';
@@ -69,7 +71,7 @@ function FreezeBomb() {
       this.friend = hero;
       this.target = opponent;
       this.target.transp = 10;
-      this.target.freezeBombed = true;
+      this.target.disabled = true;
       this.target.covered = true;
       this.target.rTemp = this.r
       this.target.gTemp = this.g

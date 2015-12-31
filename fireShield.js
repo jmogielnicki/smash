@@ -1,16 +1,18 @@
 function FireShield() {
-  this.initializeFromMaster();
+
   this.status = 'inert'
   this.transp = 255;
   this.minTransp = 10;
   this.activationTimer = 0;
+  this.id = 'fs'
   this.r = 290;
   this.g = 127;
   this.b = 2;
   this.mass = 20;
   this.activeLifeTimer = 200;
   this.icon = flameIcon
-  this.description = 'Fire Shield: destroys opponent, protects against Fire Sprites & Drones'
+  this.description = 'Fire Shield: destroys opponent, protects against Sprites & Drones'
+  this.initializeFromMaster();
  
   this.display = function() {
     fill(this.r, this.g, this.b, this.transp)
