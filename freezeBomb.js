@@ -9,7 +9,7 @@ function FreezeBomb() {
   this.b = 176;
   this.transp = 200;
   this.fadeOffTimer = 100;
-  this.activeLifeTimer = 50;
+  this.activeLifeTimer = 80;
   this.icon = snowFlakeIcon;
   this.description = 'Freeze Bomb: disables your opponent'
   this.initializeFromMaster();
