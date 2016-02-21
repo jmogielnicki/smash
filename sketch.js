@@ -19,21 +19,33 @@ var itemFrequencyList = ['Low', 'Medium', 'High']
 var itemFrequencyChosen = 1;
 var buttons = [];
 
- 
+var wolfFact = "By the 1970s the pure red wolf was thought to be extinct in the wild, but a population has since been reintroduced in North Carolina that is said to now be up to 100 red wolf individuals."
+var sealFact = "Monk Seals, long the victim of commercial hunting and persecution by fishermen, also lost much of their former habitat to coastal development and suffered from the effects of both pollution and ocean traffic. Today the population for this species is estimated at fewer than 600 individuals." 
+var leopardFact = "The Amur leopard has been reported to leap more than 19 feet horizontally and up to 10 feet vertically.  It is poached largely for its beautiful, spotted fur, and is currently teetering on the brink of extinction."
+var pandaFact = "This peaceful creature with a distinctive black and white coat is adored by the world and considered a national treasure in China.  Despite their exalted status and relative lack of natural predators, pandas are endangered. Severe threats from humans have left just over 1,800 pandas in the wild."
+var bonoboFact = "Bonobos share 98.7% of their DNA with humans — making them, along with chimpanzees, our closest living relatives.  Bonobo groups tend to be more peaceful and are led by females.  Civil unrest and increasing poverty in the area around the bonobos’ forests have contributed to bonobo poaching and deforestation."
+var gorillaFact = "As their name implies, mountain gorillas live in forests high in the mountains, at elevations of 8,000 to 13,000 feet.  What might have been a bleak outlook for the subspecies just a couple of decades ago has brightened in recent years due to conservation efforts."
+var owlFact = "Northern spotted owls have a distinct flight pattern, involving a series of rapid wingbeats interspersed with gliding flight. This allows them to glide silently down upon their prey. As a result of declining habitat, there are fewer than 2500 pairs of Northern spotted owls left."
+var foxFact = "Although historically common and widely distributed in short - and mixed - grass prairies of the Great Plains, swift foxes have experienced significant population declines and are now estimated to occupy less than half of their historic range in the United States."
+var tigerFact = "The last of Indonesia’s tigers — now fewer than 400 — are holding on for survival in the remaining patches of forests on the island of Sumatra. Accelerating deforestation and rampant poaching mean this noble creature could end up like its extinct Javan and Balinese relatives."
+var lionFact = "There are three main threats currently facing African Lions: habitat loss, loss of their prey base to the bushmeat trade, and human-lion conflict. The total population is currently estimated at about 34,000 animals, down by at least 50 percent from three decades ago. "
+var elephantFact = "Indian elephants may spend up to 19 hours a day feeding and they can produce about 220 pounds of dung per day while wandering over an area that can cover up to 125 square miles.  The main threat facing Indian elephants is loss of habitat, which then results in human-elephant conflict."
+var chimpFact = "Like us, chimps are highly social animals, care for their offspring for years and can live to be over 50. In fact, chimpanzees are our closest cousins; we share about 98 percent of our genes. In recent years poaching has become commercialized to satisfy the appetites of wealthy urban residents."
+
 function preload() {
   loadStuff();
-  players.push(new Player(0, 'Riley', rileyHead, introRiley, 177,241,255));
-  players.push(new Player(1, 'Kale', kaleHead, introKale, 237, 201, 81));
-  players.push(new Player(2, 'John', jmHead, introJohn, 235, 104, 65));
-  players.push(new Player(3, 'Petry', petryHead, introPetry, 192, 108, 132));
-  players.push(new Player(4, 'BopBop', bopbopHead, introBopBop, 255, 190, 64));
-  players.push(new Player(5, 'Eli', eliHead, introEli, 236, 240, 129));
-  players.push(new Player(6, 'Mimi', mimiHead, introMimi, 246, 114, 128));
-  players.push(new Player(7, 'Julie', julieHead, introJulie, 199, 244, 100));
-  players.push(new Player(8, 'Rania', raniaHead, introRania, 55, 159, 100));
-  players.push(new Player(9, 'Katrina', katrinaHead, introKatrina, 254,152,41));
-  players.push(new Player(10, 'Oren', orenHead, introOren, 181, 98, 43));
-  players.push(new Player(11, 'Davis', davisHead, introDavis, 205, 187, 153));
+  players.push(new Player(0, 'Monk Seal', sealHead, callSeal, sealFact, 177,241,255));
+  players.push(new Player(1, 'Amur Leopard', leopardHead, callLeopard, leopardFact, 237, 201, 81));
+  players.push(new Player(2, 'Bonobo Monkey', bonoboHead, callBonobo, bonoboFact, 235, 104, 65));
+  players.push(new Player(3, 'Giant Panda', pandaHead, callPanda, pandaFact, 192, 108, 132));
+  players.push(new Player(4, 'Red Wolf', wolfHead, callWolf, wolfFact, 255, 190, 64));
+  players.push(new Player(5, 'Mountain Gorilla', gorillaHead, callGorilla, gorillaFact, 236, 240, 129));
+  players.push(new Player(6, 'Spotted Owl', owlHead, callOwl, owlFact, 246, 114, 128));
+  players.push(new Player(7, 'Swift Fox', foxHead, callFox, foxFact, 199, 244, 100));
+  players.push(new Player(8, 'Sumatran Tiger', tigerHead, callTiger, tigerFact, 55, 159, 100));
+  players.push(new Player(9, 'African Lion', lionHead, callLion, lionFact, 254,152,41));
+  players.push(new Player(10, 'Indian Elephant', elephantHead, callElephant, elephantFact, 181, 98, 43));
+  players.push(new Player(11, 'Chimpanzee', chimpHead, callChimp, chimpFact, 205, 187, 153));
   
   isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
       // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
@@ -143,34 +155,35 @@ function loadStuff() {
   activateSound = loadSound('assets/sounds/activate.mp3');
   clickSound = loadSound('assets/sounds/click.mp3');
   explodeSound = loadSound('assets/sounds/explode.mp3');
-  
-  // Intro Names
-  introJohn = loadSound('assets/sounds/introJohn.mp3');
-  introRiley = loadSound('assets/sounds/introRiley.mp3');
-  introKale = loadSound('assets/sounds/introKale.mp3');
-  introMimi = loadSound('assets/sounds/introMimi.mp3');
-  introBopBop = loadSound('assets/sounds/introBopBop.mp3');
-  introKatrina = loadSound('assets/sounds/introKatrina.mp3');
-  introRania = loadSound('assets/sounds/introRania.mp3');
-  introJulie = loadSound('assets/sounds/introJulie.mp3');
-  introOren = loadSound('assets/sounds/introOren.mp3');
-  introEli = loadSound('assets/sounds/introEli.mp3');
-  introDavis = loadSound('assets/sounds/introDavis.mp3');
-  introPetry = loadSound('assets/sounds/introPetry.mp3');
+
+  // Animal Sounds
+  callOwl = loadSound('assets/sounds/animalSounds/barred_owl.mp3');
+  callBonobo = loadSound('assets/sounds/animalSounds/bonobo.mp3');
+  callChimp = loadSound('assets/sounds/animalSounds/chimp.mp3');
+  callElephant = loadSound('assets/sounds/animalSounds/elephant.mp3');
+  callFox = loadSound('assets/sounds/animalSounds/fox.mp3');
+  callGorilla = loadSound('assets/sounds/animalSounds/gorilla.mp3');
+  callLeopard = loadSound('assets/sounds/animalSounds/leopard.mp3');
+  callLion = loadSound('assets/sounds/animalSounds/lion.mp3');
+  callPanda = loadSound('assets/sounds/animalSounds/panda.mp3');
+  callSeal = loadSound('assets/sounds/animalSounds/seal.mp3');
+  callTiger = loadSound('assets/sounds/animalSounds/tiger.mp3');
+  callWolf = loadSound('assets/sounds/animalSounds/wolf.mp3');
+
   
   // Head Images
-  jmHead = loadImage('assets/images/jmHead.png');
-  rileyHead = loadImage('assets/images/rileyHead2.png');
-  kaleHead = loadImage('assets/images/kaleHead.png');
-  petryHead = loadImage('assets/images/petryHead.png');
-  bopbopHead = loadImage('assets/images/bopbopHead.png');
-  eliHead = loadImage('assets/images/eliHead.png');
-  mimiHead = loadImage('assets/images/mimiHead.png');
-  julieHead = loadImage('assets/images/julieHead.png');
-  raniaHead = loadImage('assets/images/raniaHead.png');
-  katrinaHead = loadImage('assets/images/katrinaHead.png');
-  orenHead = loadImage('assets/images/orenHead.png');
-  davisHead = loadImage('assets/images/davisHead.png');
+  bonoboHead = loadImage('assets/images/bonobo.png');
+  sealHead = loadImage('assets/images/sealHead.png');
+  leopardHead = loadImage('assets/images/leopardHead.png');
+  pandaHead = loadImage('assets/images/pandaHead.png');
+  wolfHead = loadImage('assets/images/wolf.png');
+  gorillaHead = loadImage('assets/images/gorilla.png');
+  owlHead = loadImage('assets/images/owlHead.png');
+  foxHead = loadImage('assets/images/foxHead.png');
+  tigerHead = loadImage('assets/images/tigerHead.png');
+  lionHead = loadImage('assets/images/lionHead.png');
+  elephantHead = loadImage('assets/images/elephantHead.png');
+  chimpHead = loadImage('assets/images/chimp.png');
 
   // Item Icons
   flameIcon = loadImage('assets/icons/flame.png');

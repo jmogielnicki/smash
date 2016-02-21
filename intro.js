@@ -24,9 +24,10 @@ function IntroScreen() {
     textSize(80);
     text("FaceSmash!", width / 2, height / 2 - 10)
     imageMode(CENTER)
-    textSize(30);
+    textSize(20);
     fill(gameR2, gameG2, gameB2)
-    text("A game for Riley & Kale", width / 2, height / 2 + 40)
+    // This was a biline, but took it out
+    text("Animal Edition", width / 2, height / 2 + 50)
     textSize(18);
     fill(200, 200, 200)
 

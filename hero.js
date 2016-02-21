@@ -9,6 +9,7 @@ function Hero(player, id, numLives) {
   this.id = id;
   this.playerId = player.id
   this.name = player.name;
+  this.fact = player.fact;
   this.numLives = numLives;
   this.x = heroPositions[this.id][0]
   this.y = heroPositions[this.id][1]
@@ -48,7 +49,7 @@ function Hero(player, id, numLives) {
   this.bTemp = player.b
   this.transpTemp = 0;
 
-  this.transp = 130;
+  this.transp = 80;
   this.transpOrig = this.transp;
   this.hasFireShield = false;
   this.covered = false;

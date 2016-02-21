@@ -24,7 +24,7 @@ function Game() {
   this.itemTimerDivider = 1;
   this.itemPickList = [];
   this.gameSeconds = 0;
-
+  var helpLink
 
 
 
@@ -419,6 +419,7 @@ function Game() {
     if (rematchButton.clicked()) {
       game.won = false;
       spriteSound.stop();
+      helpLink.remove();
       warpSound.stop();
       droneSound.stop();
       newGame(this.playersForRematch[0], this.playersForRematch[1])
@@ -426,10 +427,12 @@ function Game() {
     } else if (newPlayersButton.clicked()) {
       game = new Game();
       screen = 'setupScreen'
+      helpLink.remove();
       options.construct();
       frameRate(gameFrameRate);
     } else if (changeItemsButton.clicked()) {
       game = new Game();
+      helpLink.remove();
       screen = 'howToPlayScreen'
       howToPlay.construct();
       frameRate(gameFrameRate);
@@ -444,19 +447,33 @@ function Game() {
       }
     }
     this.buttonY = height / 2 + 150
-    rematchButton = new Button(width / 2 - 150, this.buttonY, 120, 60, 'Rematch', 18, winner.rOrig, winner.gOrig, winner.bOrig)
-    newPlayersButton = new Button(width / 2, this.buttonY, 120, 60, 'New Players', 18, winner.rOrig, winner.gOrig, winner.bOrig)
-    changeItemsButton = new Button(width / 2 + 150, this.buttonY, 120, 60, 'Change Items', 18, winner.rOrig, winner.gOrig, winner.bOrig)
+    rematchButton = new Button(width / 2 - 150, this.buttonY, 120, 60, 'Rematch', 18, winner.rOrig, winner.gOrig, winner.bOrig, 200)
+    newPlayersButton = new Button(width / 2, this.buttonY, 120, 60, 'New Players', 18, winner.rOrig, winner.gOrig, winner.bOrig, 200)
+    changeItemsButton = new Button(width / 2 + 150, this.buttonY, 120, 60, 'Change Items', 18, winner.rOrig, winner.gOrig, winner.bOrig, 200)
+
+
 
     strokeWeight(0)
     rectMode(CORNERS);
-    fill(winner.rOrig, winner.gOrig, winner.bOrig, 50)
+    fill(0, 100)
     rect(0, 0, width, height)
     fill(winner.rOrig, winner.gOrig, winner.bOrig, 255);
     textSize(60);
     textFont(myFont)
     textAlign('center')
-    text(str(winner.name) + ' Wins!', width / 2, height / 2);
+    text(str(winner.name), width / 2, height / 2 - 100);
+    text('Wins!', width / 2, height / 2 - 35);
+    textSize(14);
+    rectMode(CENTER);
+
+    fill(250);
+    textFont("Georgia")
+    text(winner.fact, width / 2, height / 2 + 30, 500, 500);
+
+    helpLink = createDiv("<b><a id='hlink' href='http://www.worldwildlife.org/how-to-help' target='_blank'>Learn More & Help Out</a><b>")
+    helpLink.position(width/2 - 70, height/2 + 75);
+
+
     rematchButton.display();
     newPlayersButton.display();
     changeItemsButton.display();
