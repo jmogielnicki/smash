@@ -132,8 +132,9 @@ function OptionsScreen() {
       fill(player.r, player.g, player.b, player.transp)
       stroke(player.r, player.g, player.b)
       strokeWeight(player.strokeWeight);
-      image(player.headImage, player.location.x, player.location.y, player.size, player.size)
       ellipse(player.location.x, player.location.y, player.size, player.size)
+      image(player.headImage, player.location.x, player.location.y, player.size, player.size)
+
     }
     if (this.complete === true) {
       startGameButton.active = true;

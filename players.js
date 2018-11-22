@@ -1,4 +1,4 @@
-function Player(id, name, headImage, introSound, fact, r, g, b) {
+function Player(id, name, headImage, introSound, r, g, b, ouchFace, deathFace) {
   this.id = id;
   this.name = name;
   this.headImage = headImage;
@@ -6,10 +6,11 @@ function Player(id, name, headImage, introSound, fact, r, g, b) {
   this.r = r;
   this.g = g;
   this.b = b;
-  this.transp = 80;
+  this.transp = 0;
   this.location = createVector(0,0);
   this.chosen = false;
   this.strokeWeight = 0;
   this.introSound = introSound;
-  this.fact = fact;
+  this.ouchFace = ouchFace;
+  this.deathFace = deathFace;
 }
