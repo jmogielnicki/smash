@@ -63,6 +63,7 @@ function FreezeBomb() {
     this.target.covered = false;
     shatterSound.play();
     this.status = 'expired';
+    this.target.currentHead = this.target.headImage
   }
 
   this.intersectAction = function(hero, opponent) {
@@ -77,6 +78,7 @@ function FreezeBomb() {
       this.target.gTemp = this.g
       this.target.bTemp = this.b
       this.target.transpTemp = this.transp
+      this.target.currentHead = frozenFace;
 
       fill(0,160,176,200);
       ellipse(this.location.x, this.location.y, 1700, 1700)

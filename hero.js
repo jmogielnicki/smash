@@ -17,6 +17,9 @@ function Hero(player, id, numLives) {
   this.collisionSound = ballHitSound;
 
   this.headImage = player.headImage;
+  this.currentHead = this.headImage
+  this.ouchFace = player.ouchFace;
+  this.deathFace = player.deathFace;
 
   // This frozen does not work for freezeBomb, so using a different variable
   this.frozen = false;
@@ -55,18 +58,29 @@ function Hero(player, id, numLives) {
   this.covered = false;
 
   this.display = function() {
+
+    fill(255, 0);
+    stroke(this.r, this.g, this.b, 100)
+    strokeWeight(4)
+    ellipse(this.location.x, this.location.y, this.size, this.size);
+
+
     noStroke;
     strokeWeight(0);
     fill(this.r, this.g, this.b, this.transp);
-    image(this.headImage, this.location.x, this.location.y, this.size, this.size)
-    ellipse(this.location.x, this.location.y, this.size, this.size);
+    ellipse(this.location.x, this.location.y, this.size-5, this.size-5);
+    image(this.currentHead, this.location.x, this.location.y, this.size, this.size)
+
+
     if (this.covered) {
       this.covering();
     }
   }
 
   this.update = function() {
+
     this.mass = (this.size / 30) * this.massMultiplier;
+
 
     // Only move players if not frozen
     if (this.frozen === false) {
@@ -265,7 +279,7 @@ function Hero(player, id, numLives) {
     this.r = 250;
     this.g = 20;
     this.b = 20;
-
+    this.currentHead = deathFace;
   }
 
   this.won = function() {

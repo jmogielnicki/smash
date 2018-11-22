@@ -24,12 +24,13 @@ function Game() {
   this.itemTimerDivider = 1;
   this.itemPickList = [];
   this.gameSeconds = 0;
-  var helpLink
+
 
 
 
   this.setupGame = function(player1, player2) {
 
+    helpLink.remove();
 
     // Grabbing enabled items from howtoplay screen
     for (var i = 0; i < howToPlay.itemsList.length; i++) {
@@ -466,14 +467,6 @@ function Game() {
     textSize(14);
     rectMode(CENTER);
 
-    fill(250);
-    textFont("Georgia")
-    text(winner.fact, width / 2, height / 2 + 30, 500, 500);
-
-    helpLink = createDiv("<b><a id='hlink' href='http://www.worldwildlife.org/how-to-help' target='_blank'>Learn More & Help Out</a><b>")
-    helpLink.position(width/2 - 70, height/2 + 75);
-
-
     rematchButton.display();
     newPlayersButton.display();
     changeItemsButton.display();
@@ -512,6 +505,7 @@ function Game() {
     resetHero.sizeChangeAmount = resetHero.sizeOrig;
     resetHero.growVelocity = .3;
     resetHero.freezeFrames = 30;
+    resetHero.currentHead = resetHero.headImage;
     // growSound.play()
   }
 

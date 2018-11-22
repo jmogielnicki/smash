@@ -13,6 +13,11 @@ function IntroScreen() {
     this.startButtonVector = createVector(width / 2, 100)
     choosePlayersButton = new Button(width / 2 + 100, height / 2 + 150, 150, 50, 'Choose Players', 16, gameR2, gameG2, gameB2)
     howToPlayButton = new Button(width / 2 - 100, height / 2 + 150, 150, 50, 'Objective & Options', 16, gameR2, gameG2, gameB2)
+
+    rectMode(CENTER);
+    helpLink = createDiv("Emoji art supplied by <a id='hlink' href='http://emojione.com' target='_blank'>Emoji One</a>")
+    helpLink.position(width-225, height-30);
+    helpLink.id('text')
   }
 
   this.animate = function() {
@@ -27,8 +32,10 @@ function IntroScreen() {
     textSize(20);
     fill(gameR2, gameG2, gameB2)
     // This was a biline, but took it out
-    text("Animal Edition", width / 2, height / 2 + 50)
+    text("Emoji Edition", width / 2, height / 2 + 50)
     textSize(18);
+
+
     fill(200, 200, 200)
 
     if (browser != 'Chrome') {
